@@ -1,6 +1,6 @@
 {
   "name": "tree-to-string",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Convert a tree structure into a human friendly string",
   "main": "index.js",
   "dependencies": {},
