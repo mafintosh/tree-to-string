@@ -1,0 +1,23 @@
+{
+  "name": "tree-to-string",
+  "version": "0.0.0",
+  "description": "Convert a tree structure into a human friendly string",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "standard": "^11.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mafintosh/tree-to-string.git"
+  },
+  "scripts": {
+    "test": "standard"
+  },
+  "author": "Mathias Buus (@mafintosh)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mafintosh/tree-to-string/issues"
+  },
+  "homepage": "https://github.com/mafintosh/tree-to-string"
+}
