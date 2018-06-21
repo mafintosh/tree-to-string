@@ -10,7 +10,7 @@ function treeToString (tree, format) {
     const value = new Box(format(tree.values || tree.value))
 
     if (!tree.children || !tree.children.length) {
-      value.hook = 0
+      value.hook = Math.floor(value.height / 2)
       return value
     }
 
