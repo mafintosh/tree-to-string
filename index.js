@@ -2,45 +2,46 @@ const util = require('util')
 
 module.exports = treeToString
 
-function treeToString (tree) {
+function treeToString (tree, format) {
+  if (!format) format = util.inspect
   return draw(tree).toString()
-}
 
-function draw (tree) {
-  const value = new Box(util.inspect(tree.values || tree.value))
+  function draw (tree) {
+    const value = new Box(format(tree.values || tree.value))
 
-  if (!tree.children || !tree.children.length) {
-    value.hook = 0
-    return value
+    if (!tree.children || !tree.children.length) {
+      value.hook = 0
+      return value
+    }
+
+    const box = new Box()
+    const children = tree.children.map(draw)
+    const widest = children.reduce(pickWidest)
+    const connects = []
+    var y = 0
+
+    for (const child of children) {
+      box.insert(widest.width - child.width, y, child)
+      box.lineX(widest.width, widest.width + 1, child.hook + y)
+      connects.push(child.hook + y)
+      y += child.height + 1
+    }
+
+    const btm = connects[0]
+    const top = connects[connects.length - 1]
+    const hook = Math.floor((top + btm) / 2)
+
+    if (connects.length > 1) box.lineY(btm, top, widest.width + 1)
+    box.lineX(widest.width + 1, widest.width + 2, hook)
+    y = hook - Math.floor(value.height / 2)
+    if (y < 0) {
+      box.indentY(-y)
+      y = 0
+    }
+    box.insert(widest.width + 3, y, value)
+    box.hook = hook
+    return box
   }
-
-  const box = new Box()
-  const children = tree.children.map(draw)
-  const widest = children.reduce(pickWidest)
-  const connects = []
-  var y = 0
-
-  for (const child of children) {
-    box.insert(widest.width - child.width, y, child)
-    box.lineX(widest.width, widest.width + 1, child.hook + y)
-    connects.push(child.hook + y)
-    y += child.height + 1
-  }
-
-  const btm = connects[0]
-  const top = connects[connects.length - 1]
-  const hook = Math.floor((top + btm) / 2)
-
-  if (connects.length > 1) box.lineY(btm, top, widest.width + 1)
-  box.lineX(widest.width + 1, widest.width + 2, hook)
-  y = hook - Math.floor(value.height / 2)
-  if (y < 0) {
-    box.indentY(-y)
-    y = 0
-  }
-  box.insert(widest.width + 3, y, value)
-  box.hook = hook
-  return box
 }
 
 function pickWidest (a, b) {

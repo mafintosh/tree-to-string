@@ -43,7 +43,7 @@ Running the above prints something similar to
 
 ## API
 
-#### `const str = treeToString(tree)`
+#### `const str = treeToString(tree, [format])`
 
 Converts a tree to a human friendly string.
 The tree should have a layout similar to this
@@ -54,6 +54,9 @@ The tree should have a layout similar to this
   children: [tree, ...]
 }
 ```
+
+Format defaults to `util.inspect`. Change this to your
+own method that pretty prints your object if your prefer.
 
 ## License
 
