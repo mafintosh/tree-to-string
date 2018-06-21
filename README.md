@@ -2,7 +2,7 @@
 
 
 ```
-npm install tree-draw
+npm install tree-to-string
 ```
 
 ## Usage
